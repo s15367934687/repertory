@@ -17,16 +17,12 @@
 	<input type="hidden" name="action" value="changePwd">
   <article class="page-container">
     <br>
-
-    
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原始密码:</label>
       <div class="formControls col-xs-8 col-sm-9">
         <input type="password" class="input-text" value="" placeholder="原始密码" id="pwd" name="pwd" style="width:240px;">
       </div>
     </div>
-   
-
     <div class="row cl">
       <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新的密码:</label>
       <div class="formControls col-xs-8 col-sm-9">
@@ -48,21 +44,13 @@
     </div>
   </article>
 </form>
-
-
-
 <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script> 
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
 <script type="text/javascript" src="static/layer/2.4/layer.js"></script>
 <script src="static/h-ui.admin/js/H-ui.admin.js"></script>
-
-
 <script src="static/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script src="static/jquery.validation/1.14.0/validate-methods.js"></script>
 <script src="static/jquery.validation/1.14.0/messages_zh.js"></script>
-
-
-
 <script>
   $(window).on('load', () => {
     $('.skin-minimal input').iCheck({
@@ -70,9 +58,7 @@
       radioClass: 'iradio-blue',
       increaseArea: '20%'
     });
-
     $("#form-changepwd").validate({
-    	//表单的校验规则
       rules: {
         pwd: {
           required: true,
@@ -90,7 +76,6 @@
       onkeyup: false,
       focusCleanup: true,
       success: "valid",
-      
       submitHandler: function (form) {
     	  $(form).ajaxSubmit({
     		  url:"user",
@@ -98,10 +83,7 @@
     		  success: function(data){
     			  	if(data.changed){
     			  		layer.msg('密码修改成功!',{icon:1,time:1000},300,400);
-    			  		//parent.location.href="index.html"
-    			  		//获取当前弹窗的层编号
     			  		var index = parent.layer.getFrameIndex(window.name);
-    			  		//间隔1000毫秒后关闭弹窗
     			  		setTimeout(function(){parent.layer.close(index);},1000,300,400);
     			  	}else{
     			  		layer.msg(data.msg,{icon:2,time:1000},300,400);
