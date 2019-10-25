@@ -63,7 +63,28 @@
 		</div>
 	</header>
 	<aside class="Hui-aside">
-		<div class="menu_dropdown bk_2" id="menus"></div>
+		<div class="menu_dropdown bk_2" id="menus">
+			<dl id="menu-admin">
+			<dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a data-href="user.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+					<!--<li><a data-href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<li><a data-href="admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>-->
+				</ul>
+			</dd>
+			</dl>
+			<dl id="menu-product">
+				<dt><i class="Hui-iconfont">&#xe620;</i> 库存管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+				<dd>
+					<ul>
+						<li><a data-href="product-brand.html" data-title="入库管理" href="javascript:void(0)">入库管理</a></li>
+						<li><a data-href="product-category.html" data-title="车位管理" href="javascript:void(0)">车位管理</a></li>
+						<li><a data-href="product-list.html" data-title="出库管理" href="javascript:void(0)">出库管理</a></li>
+					</ul>
+				</dd>
+			</dl>
+		</div>
 	</aside>
 	<div class="dislpayArrow hidden-xs">
 		<a class="pngfix" href="javascript:void(0);"
@@ -73,7 +94,7 @@
 		<div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
 			<div class="Hui-tabNav-wp">
 				<ul id="min_title_list" class="acrossTab cl">
-					<li class="active"><span title="我的桌面" data-href="">我的桌面</span>
+					<li class="active"><span title="库存详情" data-href="">库存详情</span>
 						<em></em></li>
 				</ul>
 			</div>
@@ -108,67 +129,39 @@
 	<!--请在下方写此页面业务相关的脚本-->
 	<script type="text/javascript"
 		src="static/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
-		<script type="text/javascript">
-				$(function(){
-					/*$("#min_title_list li").contextMenu('Huiadminmenu', {
-                        bindings: {
-                            'closethis': function(t) {
-                                console.log(t);
-                                if(t.find("i")){
-                                    t.find("i").trigger("click");
-                                }
-                            },
-                            'closeall': function(t) {
-                                alert('Trigger was '+t.id+'\nAction was Email');
-                            },
-                        }
-                    });*/
-				});
-		/*个人信息*/
-		function myselfinfo(){
-			layer.open({
-				type: 1,
-				area: ['300px','200px'],
-				fix: false, //不固定
-				maxmin: true,
-				shade:0.4,
-				title: '查看信息',
-				content: '<div>管理员信息</div>'
-			});
+	<script type="text/javascript">
+		$.ajax({
+			url:"user",
+			data: {"action":"login"},
+			dataType:"json",
+			success:function (user) {
+				if(user.type==="员工"){
+					$("#menu-admin").empty()
+					$("#userrole").text(user.type)
+					$("#username").text(user.name)
+				} else {
+					$("#userrole").text(user.type)
+					$("#username").text(user.name)
+				}
+			}
+		})
+		/*修改密码*/
+		function myselfinfo(title,url,w,h){
+			layer_show(title,url,w,h)
 		}
-
-		/*资讯-添加*/
-		function article_add(title,url){
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
+		/*退出*/
+		function logout(){
+			$.ajax({
+				url:"sessionuser",
+				data:{"action":"logout"},
+				dataType:"json",
+				success:function(data){
+					if(data==1){
+						location.href="login.html"
+					}
+				}
+			})
 		}
-		/*图片-添加*/
-		function picture_add(title,url){
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
-		/*产品-添加*/
-		function product_add(title,url){
-			var index = layer.open({
-				type: 2,
-				title: title,
-				content: url
-			});
-			layer.full(index);
-		}
-		/*用户-添加*/
-		function member_add(title,url,w,h){
-			layer_show(title,url,w,h);
-		}
-
 
 	</script>
 
