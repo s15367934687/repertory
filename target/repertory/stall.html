@@ -1,0 +1,116 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css"
+	href="static/h-ui.admin/css/style.css" />
+<title>用户列表</title>
+</head>
+<body>
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+		库存管理 <span class="c-gray en">&gt;</span> 车位管理 <a
+			class="btn btn-success radius r"
+			style="line-height: 1.6em; margin-top: 3px"
+			href="javascript:location.replace(location.href);" title="刷新"><i
+			class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="page-container">
+		<table id="users" class="table table-border table-bordered table-bg">
+			<thead>
+				<tr>
+					<th scope="col" colspan="9">车位列表</th>
+				</tr>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="40">车位编号</th>
+					<th width="150">车位号</th>
+					<th width="90">车位状态</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody id="stallAll">
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="static/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript"
+		src="static/My97DatePicker/4.8/WdatePicker.js"></script>
+	<script type="text/javascript"
+		src="static/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="static/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:"stall",
+		dataType:"json",
+		success:function(data){
+			data.forEach(stalls=>{
+				let $state=``
+				if(stalls.place==="已占用"){
+					$state+=`<td class="td-status"><span class="label radius">已占用</span></td>
+						<td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,${stalls.cwId})" href="javascript:;" title="已占用"><i class="Hui-iconfont">&#xe615;</i></a></td>`
+				}else{
+					$state+=`<td class="td-status"><span class="label label-success radius">空闲</span></td>
+						<td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this,${stalls.cwId})" href="javascript:;" title="空闲"><i class="Hui-iconfont">&#xe631;</i></a></td>`
+				}
+				let $tr=$(`<tr class="text-c">
+						<td><input type="checkbox" value="${stalls.cwId}" name="userids"></td>
+						<td>${stalls.cwId}</td>
+						<td>${stalls.stall}</td>
+						${$state}
+					</tr>`)
+					$("#stallAll").append($tr)
+			})
+		}
+	})
+})
+function admin_stop(obj,cwid){
+	layer.confirm('确认要存入车辆吗？',function(index){
+		$.ajax({
+			url:'stall',
+			data:{"id":cwid,"state":1,"action":"state"},
+			dataType: 'json',
+			success: function(data){
+				if(data===1){
+				layer.msg('已占用!',{icon: 5,time:1000});
+				location.replace(location.href)
+				}
+			}
+		})
+	})
+}
+function admin_start(obj,cwid){
+	layer.confirm('确认要移出车辆吗？',function(index){
+		$.ajax({
+			url:'stall',
+			data:{"id":cwid,"state":2,"action":"state"},
+			dataType: 'json',
+			success: function(data){
+				if(data===1){
+					layer.msg('空闲!', {icon: 6,time:1000});
+					location.replace(location.href)
+				}
+			}
+		})
+	})
+}
+</script>
+</body>
+</html>
