@@ -79,9 +79,7 @@ public class UserServlet extends HttpServlet {
         }
     }
     private void findAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //	查询所有用户列表集合数据
         List<User> list = userService.findAll();
-        //	json数据转换配置：日期格式设置，空值转空字符串设置，为注解Expose的属性不转换成json
         Gson gson = new Gson();
         PrintWriter out = resp.getWriter();
         out.print(gson.toJsonTree(list));

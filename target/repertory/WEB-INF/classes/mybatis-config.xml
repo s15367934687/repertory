@@ -5,6 +5,7 @@
     <typeAliases>
         <typeAlias type="com.newer.domain.User" alias="User"/>
         <typeAlias type="com.newer.domain.Stall" alias="Stall"/>
+        <typeAlias type="com.newer.domain.InStorage" alias="InStorage"/>
     </typeAliases>
 	<environments default="env1">
         <environment id="env1">
@@ -20,5 +21,6 @@
     <mappers>
         <mapper class="com.newer.mapper.UserMapper"/>
         <mapper class="com.newer.mapper.StallMapper"/>
+        <mapper class="com.newer.mapper.InStorageMapper"/>
     </mappers>
 </configuration>
