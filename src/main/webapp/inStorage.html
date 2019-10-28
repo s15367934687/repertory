@@ -45,6 +45,8 @@
 					<th width="40">入库记录编号</th>
 					<th width="150">入库车辆编号</th>
 					<th width="150">入库车型编号</th>
+					<th width="150">入库车辆名称</th>
+					<th width="150">入库车辆车型</th>
 					<th width="150">车位号</th>
 					<th width="150">入库时间</th>
 					<th width="100">操作人</th>
@@ -75,6 +77,8 @@ $(function(){
 						<td>${storage.rkId}</td>
 						<td>${storage.cid}</td>
 						<td>${storage.moderId}</td>
+						<td>${storage.mold.brand}</td>
+						<td>${storage.mold.type}</td>
 						<td>${storage.stall}</td>
 						<td>${storage.rkTime}</td>
 						<td>${storage.czUser}</td>

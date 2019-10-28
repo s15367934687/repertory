@@ -12,6 +12,15 @@ public class InStorage implements Serializable {
     private String stall;
     private Timestamp rkTime;
     private String czUser;
+    private Mold mold;
+
+    public Mold getMold() {
+        return mold;
+    }
+
+    public void setMold(Mold mold) {
+        this.mold = mold;
+    }
 
     public Integer getRkId() {
         return rkId;
